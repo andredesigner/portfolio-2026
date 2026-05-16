@@ -33,10 +33,11 @@
         <SectionTitle title="Projetos" />
         <div>
           <ProjectCard
-            v-for="project in projects"
+            v-for="(project, index) in projects"
             :key="project.uid"
             :project="project"
-            theme="light"
+            theme="accent"
+            :bounded="index === projects.length - 1"
           />
         </div>
       </div>
@@ -128,6 +129,10 @@ onMounted(() => {
   padding-block: 80px;
   background: rgb(var(--color-paper));
   color: rgb(var(--color-ink));
+}
+
+.home-projects :deep(.project-card) {
+  color: rgb(var(--color-accent));
 }
 
 .home-about {

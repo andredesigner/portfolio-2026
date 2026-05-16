@@ -3,7 +3,10 @@
     <BrandSymbol
       v-if="symbolBehavior !== 'hidden'"
       class="site-header__symbol"
-      :class="{ 'site-header__symbol--visible': shouldShowSymbol }"
+      :class="[
+        `site-header__symbol--${symbolBehavior}`,
+        { 'site-header__symbol--visible': shouldShowSymbol }
+      ]"
     />
     <a
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-accent focus:px-4 focus:py-3 focus:text-paper"
@@ -238,6 +241,10 @@ onBeforeUnmount(() => {
 
 .site-header__symbol--visible {
   pointer-events: auto;
+}
+
+.site-header__symbol--always.site-header__symbol--visible {
+  transform: translate3d(0, 0, 0);
 }
 
 .site-header__context {
