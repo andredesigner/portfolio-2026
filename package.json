@@ -1,0 +1,29 @@
+{
+  "name": "portfolio2026",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "slicemachine": "start-slicemachine",
+    "typecheck": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@nuxtjs/prismic": "^3.0.0",
+    "@nuxtjs/tailwindcss": "^6.0.0",
+    "@prismicio/client": "^7.0.0",
+    "@prismicio/vue": "^5.0.0",
+    "gsap": "^3.12.0",
+    "nuxt": "^3.0.0",
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^0.7.0",
+    "@slicemachine/adapter-nuxt": "^0.3.0",
+    "slice-machine-ui": "^2.0.0",
+    "typescript": "^5.0.0"
+  }
+}
