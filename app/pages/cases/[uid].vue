@@ -44,7 +44,7 @@
 
     <section class="next-project">
       <div class="site-container">
-        <SectionTitle title="Veja esse projeto" />
+        <SectionTitle title="Veja esse" />
         <ProjectCard :project="nextProject" theme="accent" bounded />
       </div>
     </section>

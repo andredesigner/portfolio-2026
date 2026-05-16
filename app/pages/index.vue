@@ -5,7 +5,7 @@
     <section ref="heroRef" class="home-hero">
       <div class="site-container">
         <div class="home-hero__brand editorial-grid">
-          <BrandLogo class="home-hero__logo" />
+          <BrandLogo id="home-brand-logo" class="home-hero__logo" />
         </div>
       </div>
     </section>
@@ -15,6 +15,7 @@
       action-label="Contato"
       action-href="#contact"
       symbol-behavior="sticky"
+      symbol-reveal-target="#home-brand-logo"
     />
 
     <section class="home-statement">

@@ -1,6 +1,10 @@
 <template>
   <header ref="headerRef" class="site-header">
-    <BrandSymbol v-if="shouldShowSymbol" />
+    <BrandSymbol
+      v-if="symbolBehavior !== 'hidden'"
+      class="site-header__symbol"
+      :class="{ 'site-header__symbol--visible': shouldShowSymbol }"
+    />
     <a
       class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-accent focus:px-4 focus:py-3 focus:text-paper"
       href="#main-content"
@@ -24,21 +28,25 @@ const props = withDefaults(defineProps<{
   actionLabel?: string
   actionHref?: string
   symbolBehavior?: 'always' | 'sticky' | 'hidden'
+  symbolRevealTarget?: string
 }>(), {
   context: '',
   actionLabel: '',
   actionHref: '',
-  symbolBehavior: 'always'
+  symbolBehavior: 'always',
+  symbolRevealTarget: ''
 })
 
 const route = useRoute()
 const isCaseDetail = computed(() => route.name === 'cases-uid')
 const headerRef = ref<HTMLElement | null>(null)
 const isSticky = ref(props.symbolBehavior === 'always')
+let stickyStart = 0
 
 const actionLabel = computed(() => props.actionLabel || (isCaseDetail.value ? 'Fechar' : 'Contato'))
 const actionHref = computed(() => props.actionHref || (isCaseDetail.value ? '/' : '#contact'))
 const context = computed(() => props.context.trim())
+const symbolBehavior = computed(() => props.symbolBehavior)
 const shouldShowSymbol = computed(() => {
   if (props.symbolBehavior === 'hidden') {
     return false
@@ -56,7 +64,21 @@ const updateStickyState = () => {
     return
   }
 
-  isSticky.value = window.scrollY >= headerRef.value.offsetTop
+  if (props.symbolRevealTarget) {
+    const revealTarget = document.querySelector<HTMLElement>(props.symbolRevealTarget)
+
+    if (revealTarget) {
+      isSticky.value = revealTarget.getBoundingClientRect().bottom <= 0
+      return
+    }
+  }
+
+  isSticky.value = window.scrollY >= stickyStart - 1
+}
+
+const updateStickyStart = () => {
+  stickyStart = headerRef.value?.offsetTop ?? stickyStart
+  updateStickyState()
 }
 
 onMounted(() => {
@@ -64,9 +86,10 @@ onMounted(() => {
     return
   }
 
+  stickyStart = headerRef.value?.offsetTop ?? 0
   updateStickyState()
   window.addEventListener('scroll', updateStickyState, { passive: true })
-  window.addEventListener('resize', updateStickyState)
+  window.addEventListener('resize', updateStickyStart)
 })
 
 onBeforeUnmount(() => {
@@ -75,7 +98,7 @@ onBeforeUnmount(() => {
   }
 
   window.removeEventListener('scroll', updateStickyState)
-  window.removeEventListener('resize', updateStickyState)
+  window.removeEventListener('resize', updateStickyStart)
 })
 </script>
 
@@ -93,12 +116,22 @@ onBeforeUnmount(() => {
   align-items: center;
 }
 
+.site-header__symbol {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-header__symbol--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .site-header__context {
   grid-column: 2 / span 2;
   color: rgb(var(--color-ink));
   font-size: 14px;
   font-weight: 600;
-  line-height: 22px;
+  line-height: 16px;
   text-transform: uppercase;
 }
 

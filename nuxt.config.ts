@@ -20,7 +20,11 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#0b0b0b' }
       ],
       link: [
-        { rel: 'preconnect', href: 'https://images.prismic.io' }
+        { rel: 'preconnect', href: 'https://images.prismic.io' },
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg?v=2' },
+        { rel: 'shortcut icon', type: 'image/svg+xml', href: '/favicon.svg?v=2' },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' }
       ]
     }
   },
