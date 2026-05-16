@@ -21,6 +21,7 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "@nuxt/devtools": "^4.0.0-alpha.4",
     "@nuxt/eslint": "^0.7.0",
     "@slicemachine/adapter-nuxt": "^0.3.0",
     "slice-machine-ui": "^2.0.0",

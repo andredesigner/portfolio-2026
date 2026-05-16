@@ -42,6 +42,7 @@ const isCaseDetail = computed(() => route.name === 'cases-uid')
 const headerRef = ref<HTMLElement | null>(null)
 const isSticky = ref(props.symbolBehavior === 'always')
 let stickyStart = 0
+let symbolScrollAnimation: gsap.core.Tween | null = null
 
 const actionLabel = computed(() => props.actionLabel || (isCaseDetail.value ? 'Fechar' : 'Contato'))
 const actionHref = computed(() => props.actionHref || (isCaseDetail.value ? '/' : '#contact'))
@@ -90,6 +91,38 @@ onMounted(() => {
   updateStickyState()
   window.addEventListener('scroll', updateStickyState, { passive: true })
   window.addEventListener('resize', updateStickyStart)
+
+  if (import.meta.server || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return
+  }
+
+  const symbol = headerRef.value?.querySelector<HTMLElement>('.site-header__symbol')
+  const revealTarget = props.symbolRevealTarget
+    ? document.querySelector<HTMLElement>(props.symbolRevealTarget)
+    : null
+
+  if (!symbol) {
+    return
+  }
+
+  Promise.all([
+    import('gsap'),
+    import('gsap/ScrollTrigger')
+  ]).then(([{ gsap }, { ScrollTrigger }]) => {
+    gsap.registerPlugin(ScrollTrigger)
+    gsap.set(symbol, { yPercent: -100 })
+
+    symbolScrollAnimation = gsap.to(symbol, {
+      yPercent: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: revealTarget || headerRef.value || symbol,
+        start: revealTarget ? 'bottom top' : 'top top',
+        end: revealTarget ? 'bottom+=72 top' : 'top+=72 top',
+        scrub: true
+      }
+    })
+  })
 })
 
 onBeforeUnmount(() => {
@@ -99,6 +132,9 @@ onBeforeUnmount(() => {
 
   window.removeEventListener('scroll', updateStickyState)
   window.removeEventListener('resize', updateStickyStart)
+  symbolScrollAnimation?.scrollTrigger?.kill()
+  symbolScrollAnimation?.kill()
+  symbolScrollAnimation = null
 })
 </script>
 
@@ -117,13 +153,14 @@ onBeforeUnmount(() => {
 }
 
 .site-header__symbol {
-  opacity: 0;
   pointer-events: none;
+  transform: translateY(-100%);
+  will-change: transform;
 }
 
 .site-header__symbol--visible {
-  opacity: 1;
   pointer-events: auto;
+  transform: translateY(0);
 }
 
 .site-header__context {

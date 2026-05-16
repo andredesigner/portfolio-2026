@@ -36,7 +36,7 @@
             v-for="project in projects"
             :key="project.uid"
             :project="project"
-            theme="dark"
+            theme="light"
           />
         </div>
       </div>
@@ -126,12 +126,14 @@ onMounted(() => {
 
 .home-projects {
   padding-block: 80px;
-  background: rgb(var(--color-ink));
-  color: rgb(var(--color-paper));
+  background: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
 }
 
 .home-about {
   padding-block: 80px;
+  background: rgb(var(--color-ink));
+  color: rgb(var(--color-paper));
 }
 
 .home-about__inner {
