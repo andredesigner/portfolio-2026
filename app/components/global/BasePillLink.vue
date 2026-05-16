@@ -54,6 +54,7 @@ const tag = computed(() => isAnchor.value ? 'a' : resolveComponent('NuxtLink'))
 .pill-link--green {
   width: 100%;
   background: rgb(var(--color-green));
+  border: 4px solid rgb(var(--color-green));
 }
 
 .pill-link--solid {
