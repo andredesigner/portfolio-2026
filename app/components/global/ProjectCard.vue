@@ -3,6 +3,7 @@
     :is="tag"
     class="project-card"
     :class="{ 'project-card--bounded': bounded }"
+    :style="cardOffsetStyle"
     :to="isLinked ? to : undefined"
   >
     <p class="project-card__number type-big">{{ number }}</p>
@@ -34,6 +35,7 @@ const isLinked = computed(() => Boolean(props.project.casePath))
 const tag = computed(() => isLinked.value ? resolveComponent('NuxtLink') : 'article')
 const to = computed(() => props.project.casePath)
 const number = computed(() => String(props.index + 1).padStart(2, '0'))
+const cardOffsetStyle = computed(() => `--project-card-offset: ${props.index * 64}px`)
 </script>
 
 <style scoped>
@@ -47,6 +49,8 @@ const number = computed(() => String(props.index + 1).padStart(2, '0'))
   padding-block: 40px;
   border-bottom: 1px solid rgb(var(--color-line));
   color: rgb(var(--color-ink));
+  position: sticky;
+  top: var(--project-card-offset, 0);
   background: rgb(var(--color-paper));
 }
 
