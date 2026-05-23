@@ -11,6 +11,9 @@ Sempre:
 - usar cleanup de animações
 - usar semantic HTML
 - garantir acessibilidade
+- seguir os frames Figma `499:2486` e `506:2853` como fonte visual das páginas principais
+- manter tokens globais em `app/assets/css/main.css`
+- usar links, headings e landmarks semânticos
 
 Nunca:
 - criar código duplicado
@@ -18,3 +21,5 @@ Nunca:
 - usar animações sem scrub quando dependem do scroll
 - usar !important
 - quebrar arquitetura existente
+- depender de URLs temporárias do Figma em produção
+- usar os experimentos como fonte de verdade para a home ou case final

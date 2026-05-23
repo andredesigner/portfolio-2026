@@ -1,72 +1,51 @@
 <template>
   <div class="home-page">
-    <FlagBand />
+    <TheHeader context="UX Designer" action-label="Sobre" action-href="#about" />
 
-    <section ref="heroRef" class="home-hero">
-      <div class="site-container">
-        <div class="home-hero__brand editorial-grid">
-          <BrandLogo id="home-brand-logo" class="home-hero__logo" />
-        </div>
+    <section ref="heroRef" class="home-hero site-container editorial-grid">
+      <div class="home-hero__statement grid-main">
+        <h1 class="type-h1">
+          visão sistêmica e execução high-end para experiências digitais.
+        </h1>
       </div>
     </section>
 
-    <TheHeader
-      context="Product Designer — UX/UI"
-      action-label="Contato"
-      action-href="#contact"
-      symbol-behavior="sticky"
-      symbol-reveal-target="#home-brand-logo"
-    />
-
-    <section class="home-statement">
-      <div class="site-container">
-        <div class="home-hero__statement editorial-grid">
-          <h1 class="type-h1">
-            Designer de produto com forte capacidade visual, visão sistêmica e execução high-end para experiências digitais.
-          </h1>
-        </div>
-      </div>
-    </section>
-
-    <section class="home-projects">
-      <div class="site-container">
-        <SectionTitle title="Projetos" />
-        <div>
+    <section class="home-projects" id="projects">
+      <div class="site-container editorial-grid home-projects__grid">
+        <BaseTextLink class="home-section-link" label="Projetos" href="#projects" />
+        <div class="home-projects__list">
           <ProjectCard
-            v-for="(project, index) in projects"
+            v-for="(project, index) in displayedProjects"
             :key="project.uid"
             :project="project"
-            theme="accent"
-            :bounded="index === projects.length - 1"
+            :index="project.uid === 'arquivo' ? 4 : index"
+            :bounded="index === displayedProjects.length - 1"
           />
         </div>
       </div>
     </section>
 
-    <section class="home-about">
-      <div class="site-container home-about__inner">
-        <div class="editorial-grid">
-          <h2 class="home-about__title type-h3">
-            Designer de produto com forte capacidade visual, visão sistêmica e execução high-end para experiências digitais.
-          </h2>
+    <section id="about" class="home-about site-container editorial-grid">
+      <p class="home-about__note type-big">
+        Design, sistema. Alguma coisa e presença digital para produtos com ambição visual mas algo.
+      </p>
+      <div class="home-about__content">
+        <div class="home-about__media-copy">
           <div class="home-about__portrait-frame">
             <img class="home-about__portrait" :src="profileSrc" alt="Retrato de André Oliveira">
           </div>
-        </div>
-
-        <div class="home-about__columns editorial-grid">
-          <p class="type-h5">
-            Projetando produtos digitais refinados por meio de UX, refinamento visual e design de interação.
-          </p>
-          <div class="type-big">
-            <p>Lorem ipsum dolor sit amet consectetur. Augue fringilla a mattis egestas.</p>
-            <p>Sed ullamcorper lorem faucibus quisque nisi et. Molestie tempor eleifend cras posuere a consectetur donec.</p>
-            <p>Tellus quam bibendum vestibulum mauris justo. Sagittis et non nibh id et sed ullamcorper nunc.</p>
-          </div>
-          <div class="type-big">
-            <p>Lorem ipsum dolor sit amet consectetur. Augue fringilla a mattis egestas.</p>
-            <p>Sed ullamcorper lorem faucibus quisque nisi et. Molestie tempor eleifend cras posuere a consectetur donec.</p>
-            <p>Tellus quam bibendum vestibulum mauris justo. Sagittis et non nibh id et sed ullamcorper nunc.</p>
+          <div class="home-about__text">
+            <h2 class="type-h3">
+              Design, sistema e presença digital para produtos com ambição visual.
+            </h2>
+            <div class="type-body home-about__body">
+              <p>
+                Atuo na interseção entre produto, marca e tecnologia, construindo experiências digitais precisas, escaláveis e visualmente memoráveis.
+              </p>
+              <p>
+                Projetando produtos digitais refinados por meio de UX, refinamento visual e design de interação.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -80,6 +59,7 @@ import { projects } from '~/utils/portfolioContent'
 const heroRef = ref<HTMLElement | null>(null)
 const profileSrc = '/figma/profile.png'
 const { setPageSeo } = usePageSeo()
+const displayedProjects = computed(() => projects.filter((project) => project.uid === 'onebox' || project.uid === 'arquivo'))
 
 setPageSeo({
   title: 'André Oliveira Portfolio',
@@ -100,102 +80,121 @@ onMounted(() => {
 <style scoped>
 .home-page {
   background: rgb(var(--color-paper));
+  gap: var(--grid-gap);
+  display: flex;
+  flex-direction: column;
 }
 
 .home-hero {
-  padding-top: 80px;
-  padding-bottom: 32px;
-}
-
-.home-hero__brand {
-  align-items: end;
-}
-
-.home-hero__logo {
-  grid-column: 2 / span 2;
+  min-height: 352px;
+  padding-bottom: 64px;
+  align-items: start;
 }
 
 .home-hero__statement {
-  padding-top: 120px;
-  padding-bottom: 120px;
-}
-
-.home-hero__statement h1 {
-  grid-column: 2 / span 3;
-  max-width: 892px;
+  grid-column: 3 / span 4;
 }
 
 .home-projects {
-  padding-block: 80px;
+  border-top: 1px solid rgb(var(--color-line));
+  background: rgb(var(--color-paper) / 0.88);
+  backdrop-filter: blur(16px);
+}
+
+.home-projects__grid {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.home-section-link {
+  grid-column: 1;
+  align-self: start;
+  position: sticky;
+  top: 36px;
+}
+
+.home-projects__list {
+  grid-column: 3 / span 4;
+}
+
+.home-about {
+  padding-top: 48px;
+  padding-bottom: 64px;
+  border-top: 1px solid rgb(var(--color-line));
   background: rgb(var(--color-paper));
   color: rgb(var(--color-ink));
 }
 
-.home-projects :deep(.project-card) {
-  color: rgb(var(--color-accent));
+.home-about__note {
+  grid-column: 1 / span 2;
+  max-width: 198px;
 }
 
-.home-about {
-  padding-block: 80px;
-  background: rgb(var(--color-ink));
-  color: rgb(var(--color-paper));
+.home-about__content {
+  grid-column: 3 / span 4;
 }
 
-.home-about__inner {
+.home-about__media-copy {
   display: flex;
-  flex-direction: column;
-  gap: 64px;
-  padding-top: 120px;
-}
-
-.home-about__title {
-  grid-column: 2 / span 2;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
 }
 
 .home-about__portrait-frame {
-  grid-column: 4;
-  width: 276px;
-  height: 312px;
+  width: 197px;
   overflow: hidden;
-  background: linear-gradient(221.5deg, #f2f2f2 0%, #040404 100%);
+  background: linear-gradient(180deg, rgba(46, 46, 46, 0) 0%, rgba(46, 46, 46, 0) 12.02%, #2E2E2E 12.03%, #2E2E2E 100%);
 }
 
 .home-about__portrait {
   display: block;
-  width: 276px;
-  height: 312px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: center top;
 }
 
-.home-about__columns p + p {
-  margin-top: 16px;
+.home-about__text {
+  width: min(100%, 426px);
 }
 
-@media (max-width: 900px) {
-  .home-hero,
-  .home-projects,
-  .home-about {
-    padding-block: 56px;
+.home-about__body {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.home-about__columns p + p,
+.home-about__body p + p {
+  margin-top: 0;
+}
+
+@media (max-width: 1100px) {
+  .home-hero {
+    min-height: 260px;
+    padding-bottom: 40px;
   }
 
-  .home-hero__logo,
-  .home-hero__statement h1,
-  .home-about__title,
-  .home-about__portrait-frame {
+  .home-hero__statement,
+  .home-projects__list,
+  .home-section-link,
+  .home-about__note,
+  .home-about__content {
     grid-column: 1;
   }
 
-  .home-hero__statement {
-    padding-block: 80px 40px;
+  .home-projects__grid,
+  .home-about {
+    padding-top: 36px;
+    padding-bottom: 36px;
   }
 
-  .home-about__inner {
-    padding-top: 40px;
+  .home-about__media-copy {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
-  .home-about__portrait-frame,
-  .home-about__portrait {
-    width: min(276px, 100%);
-  }
 }
 </style>

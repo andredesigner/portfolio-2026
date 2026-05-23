@@ -26,3 +26,23 @@ A experiência deve parecer:
 - técnica
 - editorial
 - premium
+
+## Escopo Figma atual
+
+Fonte visual principal:
+- Home: node `499:2486`
+- Projeto: node `506:2853`
+
+Componentes reaproveitados do Figma:
+- Logo principal
+- Símbolo vertical
+- Footer
+- Wordmark
+- Card de projeto
+- Blocos de detalhe do projeto
+
+Decisão de implementação:
+- reconstruir a interface principal a partir dos dois frames
+- preservar infraestrutura Nuxt/Prismic/GSAP
+- preservar SEO e acessibilidade como camada obrigatória
+- usar CSS escopado e tokens globais, sem Tailwind

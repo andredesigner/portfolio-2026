@@ -11,7 +11,7 @@ Criar motion premium e suave.
 
 ## Scroll
 - scrub true
-- animação conectada ao scroll
+- show content com base no scroll
 
 ## Referências
 - Apple

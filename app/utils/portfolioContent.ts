@@ -4,6 +4,7 @@ export type ProjectSummary = {
   year: string
   title: string
   summary: string
+  services?: string[]
 }
 
 export type CaseImage = {
@@ -18,7 +19,8 @@ export const projects: ProjectSummary[] = [
     client: 'Onebox',
     year: '2026',
     title: 'Elevando a presença digital de uma empresa orientada por tecnologia',
-    summary: 'Projetando produtos digitais refinados por meio de UX, refinamento visual e design de interação.'
+    summary: 'Lorem ipsum dolor sit amet consectetur. Vulputate convallis est non varius nisi.',
+    services: ['Identidade visual', 'Website design']
   },
   {
     uid: 'udda',
@@ -56,7 +58,7 @@ export const featuredCase = {
   eyebrow: 'Onebox',
   year: '2026',
   title: 'Onebox',
-  subtitle: 'Elevando a presença digital de uma empresa orientada por tecnologia.',
+  subtitle: 'Lorem ipsum dolor sit amet consectetur. Vulputate convallis est non varius nisi. Lectus consequat ultrices mauris lorem.',
   intro:
     'Designer de produto com forte capacidade visual, visão sistêmica e execução high-end para experiências digitais.',
   body:

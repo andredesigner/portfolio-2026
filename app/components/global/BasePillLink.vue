@@ -6,7 +6,6 @@
     class="pill-link"
     :class="`pill-link--${variant}`"
   >
-    <span v-if="variant === 'green'" class="pill-link__dot" />
     <span>{{ label }}</span>
   </component>
 </template>
@@ -28,10 +27,9 @@ const tag = computed(() => isAnchor.value ? 'a' : resolveComponent('NuxtLink'))
 <style scoped>
 .pill-link {
   display: inline-flex;
-  min-height: 60px;
+  min-height: 56px;
   align-items: center;
   justify-content: center;
-  gap: 16px;
   padding: 16px 24px;
   border-radius: 999px;
   color: rgb(var(--color-accent));
@@ -53,8 +51,9 @@ const tag = computed(() => isAnchor.value ? 'a' : resolveComponent('NuxtLink'))
 
 .pill-link--green {
   width: 100%;
-  background: rgb(var(--color-green));
-  border: 4px solid rgb(var(--color-green));
+  background: rgb(var(--color-accent));
+  border: 4px solid rgb(var(--color-accent));
+  color: rgb(var(--color-paper));
 }
 
 .pill-link--solid {
@@ -66,9 +65,4 @@ const tag = computed(() => isAnchor.value ? 'a' : resolveComponent('NuxtLink'))
   text-align: center;
 }
 
-.pill-link__dot {
-  width: 16px;
-  height: 16px;
-  background: rgb(var(--color-accent));
-}
 </style>

@@ -1,51 +1,45 @@
 <template>
   <article class="case-page">
-    <section class="case-hero">
-      <div class="site-container">
-        <div class="case-hero__grid editorial-grid">
-          <div class="case-hero__content">
-            <h1 class="type-h1-display">{{ featuredCase.title }}</h1>
-            <p class="type-big">{{ featuredCase.subtitle }}</p>
-          </div>
-        </div>
+    <section class="case-hero site-container editorial-grid">
+      <div class="case-hero__content">
+        <h1 class="type-h1-display">{{ featuredCase.title }}</h1>
+        <p class="type-big">{{ featuredCase.subtitle }}</p>
+      </div>
+      <aside class="case-hero__meta" aria-label="Informações do projeto">
+        <p>{{ featuredCase.year }}</p>
+        <ul>
+          <li v-for="service in featuredProject?.services" :key="service">
+            {{ service }}
+          </li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="case-detail-media site-container editorial-grid" aria-labelledby="details-title">
+      <p id="details-title" class="case-detail-media__label">Detalhes</p>
+      <img class="case-detail-media__image" :src="projectHeroSrc" :alt="featuredCase.imageAlt">
+    </section>
+
+    <section class="case-statement site-container editorial-grid">
+      <h2 class="type-h3">{{ featuredCase.intro }}</h2>
+    </section>
+
+    <section class="case-duo site-container editorial-grid" aria-label="Aplicações visuais do projeto">
+      <img class="case-duo__image" :src="projectToteSrc" alt="Sacola com aplicação visual do projeto Onebox">
+      <img class="case-duo__image" :src="projectToteSrc" alt="Variação de sacola com aplicação visual do projeto Onebox">
+    </section>
+
+    <section class="case-text site-container editorial-grid">
+      <div class="case-text__content type-big">
+        <p>{{ featuredCase.body }}</p>
+        <p>{{ featuredCase.secondBody }}</p>
       </div>
     </section>
 
-    <section class="case-content">
-      <div class="site-container case-content__inner">
-        <img class="case-image case-image--full" :src="projectHeroSrc" :alt="featuredCase.imageAlt">
-
-        <div class="case-text editorial-grid">
-          <div class="case-text__content">
-            <h2 class="type-h3">{{ featuredCase.intro }}</h2>
-            <div class="case-text__body type-big">
-              <p>{{ featuredCase.body }}</p>
-              <p>{{ featuredCase.secondBody }}</p>
-            </div>
-          </div>
-        </div>
-
-        <img class="case-image case-image--full" :src="projectHeroSrc" :alt="featuredCase.imageAlt">
-
-        <div class="case-image-grid">
-          <img class="case-image" :src="projectToteSrc" alt="Sacola com aplicação visual do projeto Onebox">
-          <img class="case-image" :src="projectToteSrc" alt="Variação de sacola com aplicação visual do projeto Onebox">
-        </div>
-
-        <div class="case-note editorial-grid">
-          <p class="type-big">
-            Lorem ipsum dolor sit amet consectetur. Augue fringilla a mattis egestas. Sed ullamcorper lorem faucibus quisque nisi et. Molestie tempor eleifend cras posuere a consectetur donec. Tellus quam bibendum vestibulum mauris justo.
-          </p>
-        </div>
-
-        <img class="case-image case-image--full" :src="projectHeroSrc" :alt="featuredCase.imageAlt">
-      </div>
-    </section>
-
-    <section class="next-project">
-      <div class="site-container">
-        <SectionTitle title="Veja esse" />
-        <ProjectCard :project="nextProject" theme="accent" bounded />
+    <section class="next-project site-container editorial-grid">
+      <p class="next-project__label type-big">Veja esse também.</p>
+      <div class="next-project__card">
+        <ProjectCard :project="relatedProject" :index="0" bounded />
       </div>
     </section>
   </article>
@@ -58,16 +52,13 @@ const route = useRoute()
 const projectHeroSrc = '/figma/project-hero.png'
 const projectToteSrc = '/figma/project-tote.png'
 const { setPageSeo } = usePageSeo()
-const currentProjectIndex = computed(() => projects.findIndex((project) => project.uid === route.params.uid))
-const nextProject = computed(() => {
-  const nextIndex = currentProjectIndex.value + 1
-
-  return projects[nextIndex] ?? projects[0]
-})
+const featuredProject = computed(() => projects.find((project) => project.uid === featuredCase.uid))
+const relatedProject = computed(() => featuredProject.value ?? projects[0])
 
 setPageSeo({
   title: `${featuredCase.title} | André Oliveira`,
-  description: featuredCase.subtitle
+  description: featuredCase.subtitle,
+  image: projectHeroSrc
 })
 
 watchEffect(() => {
@@ -83,100 +74,133 @@ watchEffect(() => {
 }
 
 .case-hero {
-  padding-block: 80px;
-}
-
-.case-hero__grid {
-  padding-block: 120px;
+  min-height: 384px;
+  padding-bottom: 48px;
+  align-items: start;
 }
 
 .case-hero__content {
-  grid-column: 2 / span 3;
+  grid-column: 3 / span 3;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.case-hero__meta {
+  grid-column: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: rgb(var(--color-ink));
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.case-hero__meta ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.case-detail-media {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  background: rgb(var(--color-paper));
+}
+
+.case-detail-media__label {
+  grid-column: 1;
+  align-self: start;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.case-detail-media__image {
+  grid-column: 1 / span 6;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1344 / 844;
+  object-fit: cover;
+}
+
+.case-statement {
+  padding-top: 16px;
+  padding-bottom: 64px;
+}
+
+.case-statement h2 {
+  grid-column: 3 / span 3;
+}
+
+.case-duo {
+  padding-bottom: 64px;
+}
+
+.case-duo__image {
+  grid-column: span 3;
+  width: 100%;
+  aspect-ratio: 654 / 842;
+  object-fit: cover;
+}
+
+.case-text {
+  padding-top: 16px;
+  padding-bottom: 64px;
+}
+
+.case-text__content {
+  grid-column: 3 / span 4;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.case-content {
-  padding-block: 80px;
-}
-
-.case-content__inner {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.case-image {
-  width: 100%;
-  object-fit: cover;
-}
-
-.case-image--full {
-  aspect-ratio: 1198 / 752;
-}
-
-.case-text {
-  padding-block: 64px;
-}
-
-.case-text__content {
-  grid-column: 2 / span 3;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.case-text__body p + p {
-  margin-top: 16px;
-}
-
-.case-image-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--grid-gap);
-}
-
-.case-image-grid .case-image {
-  aspect-ratio: 584 / 752;
-  height: 752px;
-}
-
-.case-note {
-  padding-block: 64px;
-}
-
-.case-note p {
-  grid-column: 3 / span 2;
-}
-
 .next-project {
-  padding-block: 80px;
+  padding-top: 48px;
+  padding-bottom: 48px;
+  border-top: 1px solid rgb(var(--color-line));
+  background: rgb(var(--color-paper));
 }
 
-@media (max-width: 900px) {
-  .case-hero,
-  .case-content,
-  .next-project {
-    padding-block: 56px;
-  }
+.next-project__label {
+  grid-column: 1 / span 2;
+}
 
-  .case-hero__grid {
-    padding-block: 72px;
+.next-project__card {
+  grid-column: 3 / span 4;
+}
+
+@media (max-width: 1100px) {
+  .case-hero {
+    min-height: 300px;
+    padding-bottom: 40px;
   }
 
   .case-hero__content,
+  .case-hero__meta,
+  .case-detail-media__label,
+  .case-detail-media__image,
+  .case-statement h2,
   .case-text__content,
-  .case-note p {
+  .next-project__label,
+  .next-project__card {
     grid-column: 1;
+    width: 100%;
+    max-width: 350px;
   }
 
-  .case-image-grid {
-    grid-template-columns: 1fr;
+  .case-hero__meta {
+    align-self: start;
   }
 
-  .case-image-grid .case-image {
-    height: auto;
+  .case-duo {
+    gap: 20px;
+  }
+
+  .case-duo__image {
+    grid-column: 1;
   }
 }
 </style>

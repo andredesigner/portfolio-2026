@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   experimental: {
     appManifest: false
   },
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/prismic'],
+  modules: ['@nuxtjs/prismic'],
   css: ['~/assets/css/main.css'],
   app: {
     pageTransition: {

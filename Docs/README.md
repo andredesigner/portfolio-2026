@@ -20,7 +20,8 @@ Criar um portfólio premium focado em:
 - Nuxt 3
 - Prismic CMS
 - GSAP
-- TailwindCSS
+- CSS escopado por componente
+- TypeScript
 
 ## Estrutura
 
@@ -37,3 +38,6 @@ Criar um portfólio premium focado em:
 - Motion modularizado
 - SEO por página
 - SSR first
+- Grid editorial de 6 colunas no desktop
+- Conteúdo textual centralizado a partir da coluna 3 quando seguir o Figma
+- Assets de Figma versionados em `app/public/figma`
