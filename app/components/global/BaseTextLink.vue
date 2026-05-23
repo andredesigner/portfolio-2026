@@ -26,11 +26,12 @@ const tag = computed(() => isAnchor.value ? 'a' : resolveComponent('NuxtLink'))
   gap: 4px;
   align-items: flex-end;
   color: rgb(var(--color-accent));
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 28px;
   position: relative;
   justify-self: start;
+  text-transform: uppercase;
 }
 
 .text-link::after {

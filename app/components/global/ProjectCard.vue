@@ -5,14 +5,14 @@
     :class="{ 'project-card--bounded': bounded }"
     :to="isLinked ? to : undefined"
   >
-    <div class="project-card__meta">
-      <p class="type-big">{{ number }}</p>
-      <div>
+    <p class="project-card__number type-big">{{ number }}</p>
+    <div class="project-card__content">
+      <div class="project-card__meta">
         <p v-if="project.client" class="type-label">{{ project.client }}</p>
         <p class="type-big">{{ project.year }}</p>
       </div>
+      <h3 class="project-card__title type-h2">{{ project.title }}</h3>
     </div>
-    <h3 class="project-card__title type-h2">{{ project.title }}</h3>
   </component>
 </template>
 
@@ -30,22 +30,24 @@ const props = withDefaults(defineProps<{
   theme: 'light'
 })
 
-const isLinked = computed(() => props.project.uid !== 'arquivo')
+const isLinked = computed(() => Boolean(props.project.casePath))
 const tag = computed(() => isLinked.value ? resolveComponent('NuxtLink') : 'article')
-const to = computed(() => `/cases/${props.project.uid}`)
+const to = computed(() => props.project.casePath)
 const number = computed(() => String(props.index + 1).padStart(2, '0'))
 </script>
 
 <style scoped>
 .project-card {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 197px minmax(0, 654px);
   gap: 32px;
-  align-items: end;
+  align-items: center;
   min-width: 0;
   padding-block: 40px;
   border-bottom: 1px solid rgb(var(--color-line));
   color: rgb(var(--color-ink));
+  background: rgb(var(--color-paper));
 }
 
 .project-card:last-child {
@@ -56,29 +58,33 @@ const number = computed(() => String(props.index + 1).padStart(2, '0'))
   border-bottom-color: rgb(var(--color-line));
 }
 
+.project-card__number {
+  align-self: stretch;
+}
+
+.project-card__content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 32px;
+}
+
 .project-card__meta {
-  flex: 0 0 197px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 128px;
+  gap: 4px;
 }
 
 .project-card__title {
-  flex: 1 1 auto;
   min-width: 0;
   color: rgb(var(--color-ink));
-}
-
-.type-big {
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 28px;
+  text-transform: uppercase;
 }
 
 @media (max-width: 1100px) {
   .project-card {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 24px;
     align-items: start;
     padding-block: 32px;
@@ -86,8 +92,10 @@ const number = computed(() => String(props.index + 1).padStart(2, '0'))
   }
 
   .project-card__meta {
-    flex-basis: auto;
-    min-height: auto;
+    gap: 4px;
+  }
+
+  .project-card__content {
     gap: 24px;
   }
 }

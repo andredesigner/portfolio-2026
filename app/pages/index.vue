@@ -18,7 +18,7 @@
             v-for="(project, index) in displayedProjects"
             :key="project.uid"
             :project="project"
-            :index="project.uid === 'arquivo' ? 4 : index"
+            :index="index"
             :bounded="index === displayedProjects.length - 1"
           />
         </div>
@@ -59,7 +59,7 @@ import { projects } from '~/utils/portfolioContent'
 const heroRef = ref<HTMLElement | null>(null)
 const profileSrc = '/figma/profile.png'
 const { setPageSeo } = usePageSeo()
-const displayedProjects = computed(() => projects.filter((project) => project.uid === 'onebox' || project.uid === 'arquivo'))
+const displayedProjects = computed(() => projects)
 
 setPageSeo({
   title: 'André Oliveira Portfolio',
@@ -126,8 +126,7 @@ onMounted(() => {
 }
 
 .home-about__note {
-  grid-column: 1 / span 2;
-  max-width: 198px;
+  grid-column: 1;
 }
 
 .home-about__content {
@@ -162,7 +161,7 @@ onMounted(() => {
 .home-about__body {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 16px;
   margin-top: 32px;
 }
 

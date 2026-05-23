@@ -4,6 +4,7 @@ export type ProjectSummary = {
   year: string
   title: string
   summary: string
+  casePath?: string
   services?: string[]
 }
 
@@ -20,6 +21,7 @@ export const projects: ProjectSummary[] = [
     year: '2026',
     title: 'Elevando a presença digital de uma empresa orientada por tecnologia',
     summary: 'Lorem ipsum dolor sit amet consectetur. Vulputate convallis est non varius nisi.',
+    casePath: '/cases/onebox',
     services: ['Identidade visual', 'Website design']
   },
   {
