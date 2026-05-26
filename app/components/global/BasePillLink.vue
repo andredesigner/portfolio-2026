@@ -3,24 +3,36 @@
     :is="tag"
     :href="isAnchor ? href : undefined"
     :to="!isAnchor ? href : undefined"
+    :target="isExternal && externalTarget === '_blank' ? '_blank' : undefined"
+    :rel="isExternal && externalTarget === '_blank' ? 'noopener noreferrer' : undefined"
     class="pill-link"
-    :class="`pill-link--${variant}`"
+    :class="[
+      `pill-link--${variant}`,
+      `pill-link--${size}`
+    ]"
   >
     <span>{{ label }}</span>
   </component>
 </template>
 
 <script setup lang="ts">
+import { isExternalHref, isNativeHref } from '~/utils/linkTarget'
+
 const props = withDefaults(defineProps<{
   label: string
   href?: string
-  variant?: 'default' | 'outline' | 'green' | 'solid'
+  variant?: 'default' | 'outline' | 'green' | 'solid' | 'dark' | 'paper'
+  size?: 'default' | 'large' | 'circle'
+  externalTarget?: '_self' | '_blank'
 }>(), {
   href: '#',
-  variant: 'default'
+  variant: 'default',
+  size: 'default',
+  externalTarget: '_self'
 })
 
-const isAnchor = computed(() => props.href.startsWith('http') || props.href.startsWith('mailto:') || props.href.endsWith('.pdf') || props.href.startsWith('#'))
+const isAnchor = computed(() => isNativeHref(props.href))
+const isExternal = computed(() => isExternalHref(props.href))
 const tag = computed(() => isAnchor.value ? 'a' : resolveComponent('NuxtLink'))
 </script>
 
@@ -36,7 +48,7 @@ const tag = computed(() => isAnchor.value ? 'a' : resolveComponent('NuxtLink'))
   font-size: 20px;
   font-weight: 500;
   line-height: 28px;
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), background-color 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 260ms var(--ease-brand), background-color 260ms var(--ease-brand), color 260ms var(--ease-brand);
 }
 
 .pill-link:hover {
@@ -62,6 +74,29 @@ const tag = computed(() => isAnchor.value ? 'a' : resolveComponent('NuxtLink'))
   padding: 16px;
   background: rgb(var(--color-accent));
   color: rgb(var(--color-paper));
+  text-align: center;
+}
+
+.pill-link--dark {
+  background: rgb(var(--color-ink));
+  color: rgb(var(--color-paper));
+}
+
+.pill-link--paper {
+  background: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+}
+
+.pill-link--large {
+  min-height: 112px;
+  padding: 32px;
+}
+
+.pill-link--circle {
+  width: 91px;
+  height: 91px;
+  min-height: 91px;
+  padding: 24px;
   text-align: center;
 }
 

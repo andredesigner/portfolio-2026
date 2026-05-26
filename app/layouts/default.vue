@@ -11,6 +11,26 @@
 <script setup lang="ts">
 const route = useRoute()
 const showGlobalHeader = computed(() => route.path !== '/')
+const motion = useMotion()
+let cleanupPageMotion: (() => void) | undefined
+
+const runPageMotion = async () => {
+  cleanupPageMotion?.()
+  await nextTick()
+  cleanupPageMotion = await motion.initPageMotion(document)
+}
+
+onMounted(() => {
+  runPageMotion()
+})
+
+onBeforeUnmount(() => {
+  cleanupPageMotion?.()
+})
+
+watch(() => route.fullPath, () => {
+  runPageMotion()
+})
 </script>
 
 <style scoped>

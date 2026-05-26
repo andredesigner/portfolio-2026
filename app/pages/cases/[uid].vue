@@ -39,7 +39,7 @@
     <section class="next-project site-container editorial-grid">
       <p class="next-project__label type-big">Veja esse também.</p>
       <div class="next-project__card">
-        <ProjectCard :project="relatedProject" :index="0" bounded />
+        <ProjectRow :project="relatedProject" :index="0" layout="contained" />
       </div>
     </section>
   </article>

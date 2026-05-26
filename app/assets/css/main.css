@@ -1,13 +1,19 @@
 :root {
-  --color-ink: 46 46 46;
+  --color-ink: 27 21 23;
   --color-paper: 255 255 255;
-  --color-muted: 91 91 91;
-  --color-line: 46 46 46;
+  --color-muted: 86 80 82;
+  --color-line: 27 21 23;
   --color-accent: 51 102 255;
+  --color-wordmark: 255 182 7;
   --color-green: 0 156 88;
   --grid-gap: 32px;
   --space-page: 48px;
+  --space-edge: 12px;
+  --content-home: 944px;
+  --project-meta-width: 236px;
+  --project-mobile-offset: 92px;
   --radius-brand: 999px;
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: light;
 }
 
@@ -90,6 +96,15 @@ button {
   padding-inline: var(--space-page);
 }
 
+.figma-edge {
+  padding-inline: var(--space-edge);
+}
+
+.figma-container {
+  width: min(100%, var(--content-home));
+  margin-inline: auto;
+}
+
 .editorial-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -114,24 +129,24 @@ button {
 
 .type-label {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 22px;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
 }
 
 .type-body {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 24px;
+  letter-spacing: 0.8px;
 }
 
 .type-h1 {
-  font-size: 56px;
+  font-size: 48px;
   font-weight: 500;
-  line-height: 68px;
-  text-transform: uppercase;
+  line-height: 56px;
   overflow-wrap: break-word;
-  text-transform: uppercase;
 }
 
 .type-h1-display {
@@ -143,19 +158,19 @@ button {
 }
 
 .type-h2 {
-  font-size: 44px;
-  font-weight: 500;
-  line-height: 1.16;
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 46px;
+  letter-spacing: 0.304px;
   overflow-wrap: break-word;
-  text-transform: uppercase;
 }
 
 .type-h3 {
-  font-size: 36px;
+  font-size: 44px;
   font-weight: 500;
-  line-height: 1.16;
+  line-height: 64px;
+  letter-spacing: 0.352px;
   overflow-wrap: break-word;
-  text-transform: uppercase;
 }
 
 .type-h5 {
@@ -189,6 +204,36 @@ button {
   line-height: 28px;
 }
 
+.type-project-title {
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 46px;
+  letter-spacing: 0.304px;
+  overflow-wrap: break-word;
+}
+
+.type-contact-title {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 56px;
+  letter-spacing: 0.352px;
+  overflow-wrap: break-word;
+}
+
+.type-about-display {
+  font-size: 96px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 1.536px;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+
+.pr-pl-12{
+  padding-left: var(--space-edge);
+  padding-right: var(--space-edge);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -203,7 +248,7 @@ button {
 @media (max-width: 1100px) {
   :root {
     --grid-gap: 20px;
-    --space-page: 20px;
+    --space-page: 12px;
   }
 
   .editorial-grid {
@@ -218,16 +263,35 @@ button {
 
   .type-h1,
   .type-h1-display {
-    font-size: 32px;
-    line-height: 1.1;
+    font-size: 36px;
+    line-height: 44px;
   }
 
   .type-h2 {
-    font-size: 31px;
-    align-content: flex-end;
+    font-size: 28px;
+    line-height: 38px;
   }
 
   .type-h3 {
-    font-size: 30px;
+    font-size: 32px;
+    line-height: 42px;
+  }
+
+  .type-project-title {
+    font-size: 28px;
+    line-height: 38px;
+    letter-spacing: 0.224px;
+  }
+
+  .type-contact-title {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0.256px;
+  }
+
+  .type-about-display {
+    font-size: 160px;
+    line-height: 0.9;
+    letter-spacing: 2.56px;
   }
 }
