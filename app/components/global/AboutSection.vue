@@ -30,8 +30,6 @@
 
       <figure
         class="about-section__portrait-frame"
-        data-motion="reveal"
-        data-motion-duration="0.9"
       >
         <img
           class="about-section__portrait"
